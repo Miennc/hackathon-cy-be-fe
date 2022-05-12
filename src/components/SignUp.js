@@ -1,11 +1,14 @@
 import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import {authService} from "../services/authService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
 
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -38,7 +41,31 @@ const SignUp = () => {
             //    alert(JSON.stringify(values, null, 2));
             //    alert(values.username)
             authService.doSignUp(values).then((res) => {
-                console.log(res.data)
+                toast.success('Sign up successful!!!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                console.log(res.data);
+                navigate('/login');
+            }).catch((e)=>{
+                console.log(e);
+
+                toast.error('Sign up fail!!!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+
             })
         },
     });
@@ -46,6 +73,10 @@ const SignUp = () => {
 
     return (
         <div className="font-sans">
+            <ToastContainer
+            />
+            {/* Same as */}
+            <ToastContainer />
             <div className="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100 ">
                 <div className="relative sm:max-w-sm w-full">
                     <div
@@ -150,7 +181,7 @@ const SignUp = () => {
                             <div className="mt-3">
                                 <div className="flex justify-center items-center">
                                     <label className="mr-2">You have an account?</label>
-                                    <Link to="/">
+                                    <Link to="/login">
                                         <a className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Login</a>
                                     </Link>
                                 </div>

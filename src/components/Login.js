@@ -3,6 +3,7 @@ import {useFormik} from 'formik';
 import {Link} from "react-router-dom";
 import * as Yup from 'yup';
 import {authService} from "../services/authService";
+import {toast, ToastContainer} from "react-toastify";
 
 const Login = () => {
     const formik = useFormik({
@@ -25,21 +26,28 @@ const Login = () => {
             // alert(values.username)
             authService.doLogin(values).then((res) => {
                 alert('yeeeeeeeeeeeee')
+                toast.success('Login successful!!!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 localStorage.setItem('accessToken', res.data.accessToken);
-                localStorage.setItem('email', res.data.email);
             }).catch((e) => {
                 console.log(e)
             })
         },
     });
-    
-    const forgotPassword = () => {
-      
-    }
-
 
     return (
         <div className="font-sans">
+            <ToastContainer
+            />
+            {/* Same as */}
+            <ToastContainer />
             <div className="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100 ">
                 <div className="relative sm:max-w-sm w-full">
                     <div
@@ -119,10 +127,10 @@ const Login = () => {
                             </div>
                             <div className="mt-3">
                                 <div className="flex justify-center items-center">
-                                    <a
-                                        onClick={forgotPassword}
-                                        className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Forgot
-                                        password</a>
+                                    <Link to="/forgot-password">
+                                        <a className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Forgot
+                                            password</a>
+                                    </Link>
                                 </div>
                             </div>
                         </form>
