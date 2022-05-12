@@ -51,10 +51,8 @@ const SignUp = () => {
                     progress: undefined,
                 });
                 console.log(res.data);
-                navigate('/login');
+                    navigate('/login');
             }).catch((e)=>{
-                console.log(e);
-
                 toast.error('Sign up fail!!!', {
                     position: "top-right",
                     autoClose: 5000,

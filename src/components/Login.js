@@ -1,11 +1,12 @@
 import React from 'react';
 import {useFormik} from 'formik';
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import * as Yup from 'yup';
 import {authService} from "../services/authService";
 import {toast, ToastContainer} from "react-toastify";
 
 const Login = () => {
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -25,7 +26,6 @@ const Login = () => {
             // alert(JSON.stringify(values, null, 2));
             // alert(values.username)
             authService.doLogin(values).then((res) => {
-                alert('yeeeeeeeeeeeee')
                 toast.success('Login successful!!!', {
                     position: "top-right",
                     autoClose: 5000,
@@ -37,11 +37,18 @@ const Login = () => {
                 });
                 localStorage.setItem('accessToken', res.data.accessToken);
             }).catch((e) => {
-                console.log(e)
+                    toast.error('Sign up fail!!!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             })
         },
     });
-
     return (
         <div className="font-sans">
             <ToastContainer
