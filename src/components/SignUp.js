@@ -2,21 +2,24 @@ import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {Link} from "react-router-dom";
+import {authService} from "../services/authService";
 
 const SignUp = () => {
+
+
     const formik = useFormik({
         initialValues: {
-            fullName: '',
-            userName: '',
+            fullname: '',
+            username: '',
             email: '',
             password: '',
             rePassword: '',
         },
         validationSchema: Yup.object({
-            fullName: Yup.string()
+            fullname: Yup.string()
                 .max(15, 'Must be 15 characters or less')
                 .required('Enter full name pls'),
-            userName: Yup.string()
+            username: Yup.string()
                 .max(20, 'Must be 20 characters or less')
                 .required('Enter user name pls'),
             email: Yup.string().email('Invalid email address').required('Enter email pls'),
@@ -32,11 +35,13 @@ const SignUp = () => {
             })
         }),
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-            alert(values.userName)
+            //    alert(JSON.stringify(values, null, 2));
+            //    alert(values.username)
+            authService.doSignUp(values).then((res) => {
+                console.log(res.data)
+            })
         },
     });
-
 
 
     return (
@@ -56,33 +61,37 @@ const SignUp = () => {
 
                             <div>
                                 <input
-                                    id="fullName"
-                                    name="fullName"
+                                    id="fullname"
+                                    name="fullname"
                                     type="text"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    value={formik.values.fullName}
+                                    value={formik.values.fullname}
                                     placeholder="Full name"
                                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 />
-                                {formik.touched.fullName && formik.errors.fullName ? (
-                                        <p className="error font-semibold text-sm italic text-red-600"><div>{formik.errors.fullName}</div></p>
+                                {formik.touched.fullname && formik.errors.fullname ? (
+                                    <p className="error font-semibold text-sm italic text-red-600">
+                                        <div>{formik.errors.fullname}</div>
+                                    </p>
                                 ) : null}
                             </div>
 
                             <div className="mt-3">
                                 <input
-                                    id="userName"
-                                    name="userName"
+                                    id="username"
+                                    name="username"
                                     type="text"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    value={formik.values.userName}
+                                    value={formik.values.username}
                                     placeholder="User name"
                                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 />
-                                {formik.touched.userName && formik.errors.userName ? (
-                                        <p className="error font-semibold text-sm italic text-red-600"><div>{formik.errors.userName}</div></p>
+                                {formik.touched.username && formik.errors.username ? (
+                                    <p className="error font-semibold text-sm italic text-red-600">
+                                        <div>{formik.errors.username}</div>
+                                    </p>
                                 ) : null}
                             </div>
 
@@ -98,7 +107,7 @@ const SignUp = () => {
                                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 />
                                 {formik.touched.email && formik.errors.email ? (
-                                        <p className="error font-semibold text-sm italic text-red-600"> {formik.errors.email}</p>
+                                    <p className="error font-semibold text-sm italic text-red-600"> {formik.errors.email}</p>
                                 ) : null}
                             </div>
 
