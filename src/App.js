@@ -6,12 +6,16 @@ import {
   Link,
 } from "react-router-dom";
 import About from './components/About';
+import AddContent from './components/AddContent';
 export default function App() {
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<About />} >
+        
+          </Route>
+          <Route path="/addContent" element={<AddContent />} >
         
           </Route>
        
