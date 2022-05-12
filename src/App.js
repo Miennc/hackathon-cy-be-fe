@@ -6,6 +6,7 @@ import {
   Link,
 } from "react-router-dom";
 import About from './components/About';
+import AddSubject from './components/AddSubject';
 export default function App() {
   return (
     <div>
@@ -14,7 +15,10 @@ export default function App() {
           <Route path="/" element={<About />} >
         
           </Route>
-       
+
+          <Route path="/add-subject" element={<AddSubject />} >
+        
+          </Route>
         </Routes>
         {/* <Link to={`/about?name=mien&age=20`}>about</Link> */}
       </BrowserRouter>
