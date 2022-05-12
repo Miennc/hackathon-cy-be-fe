@@ -1,28 +1,25 @@
 import React from 'react';
 import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
+    BrowserRouter,
+    Routes,
+    Route,
+    Link,
 } from "react-router-dom";
-import About from './components/About';
-import AddSubject from './components/AddSubject';
+
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+
 export default function App() {
-  return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<About />} >
-        
-          </Route>
+    return (
+        <div>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Login/>}></Route>
+                    <Route path="/signup" element={<SignUp/>}></Route>
+                </Routes>
+                {/* <Link to={`/about?name=mien&age=20`}>about</Link> */}
+            </BrowserRouter>
 
-          <Route path="/add-subject" element={<AddSubject />} >
-        
-          </Route>
-        </Routes>
-        {/* <Link to={`/about?name=mien&age=20`}>about</Link> */}
-      </BrowserRouter>
-
-    </div>
-  )
+        </div>
+    )
 }
