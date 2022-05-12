@@ -2,16 +2,17 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {Link} from "react-router-dom";
 import * as Yup from 'yup';
+import {authService} from "../services/authService";
 
 const Login = () => {
     const formik = useFormik({
         initialValues: {
-            userName: '',
+            username: '',
             password: '',
         },
         validationSchema: Yup.object({
 
-            userName: Yup.string()
+            username: Yup.string()
                 .max(20, 'Must be 20 characters or less')
                 .required('Enter user name pls'),
             // email: Yup.string().email('Invalid email address').required('Enter email pls'),
@@ -20,11 +21,21 @@ const Login = () => {
                 .required('Enter password pls'),
         }),
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
-            alert(values.userName)
+            // alert(JSON.stringify(values, null, 2));
+            // alert(values.username)
+            authService.doLogin(values).then((res) => {
+                alert('yeeeeeeeeeeeee')
+                localStorage.setItem('accessToken', res.data.accessToken);
+                localStorage.setItem('email', res.data.email);
+            }).catch((e) => {
+                console.log(e)
+            })
         },
     });
-
+    
+    const forgotPassword = () => {
+      
+    }
 
 
     return (
@@ -44,17 +55,19 @@ const Login = () => {
 
                             <div className="mt-3">
                                 <input
-                                    id="userName"
-                                    name="userName"
+                                    id="username"
+                                    name="username"
                                     type="text"
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    value={formik.values.userName}
+                                    value={formik.values.username}
                                     placeholder="User name"
                                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
                                 />
-                                {formik.touched.userName && formik.errors.userName ? (
-                                    <p className="error font-semibold text-sm italic text-red-600"><div>{formik.errors.userName}</div></p>
+                                {formik.touched.username && formik.errors.username ? (
+                                    <p className="error font-semibold text-sm italic text-red-600">
+                                        <div>{formik.errors.username}</div>
+                                    </p>
                                 ) : null}
                             </div>
 
@@ -99,10 +112,17 @@ const Login = () => {
                                 <div className="flex justify-center items-center">
                                     <label className="mr-2">You need an account?</label>
                                     <Link to="/signup">
-                                        <a className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Sign up</a>
+                                        <a className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Sign
+                                            up</a>
                                     </Link>
-
-
+                                </div>
+                            </div>
+                            <div className="mt-3">
+                                <div className="flex justify-center items-center">
+                                    <a
+                                        onClick={forgotPassword}
+                                        className=" text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Forgot
+                                        password</a>
                                 </div>
                             </div>
                         </form>
